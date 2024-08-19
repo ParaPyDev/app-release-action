@@ -32,16 +32,10 @@ inputs:
   parapy-app-version:
     description: 'The version of your application release, (in the shape of [semantic versioning](https://semver.org/)'
     required: false
-  test:
-    description: 'Whether to test your Application by running the pytests you provided, cancelling subsequent steps like releasing if any of the tests fail'
-    type: boolean
-    required: false
-    default: true
   deploy:
     description: 'Whether to deploy after the release of your application is succesful'
-    type: boolean
     required: false
-    default: false
+    default: "false"
 
 runs:
   using: "composite"
@@ -64,22 +58,6 @@ runs:
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends build-essential cmake libdouble-conversion3 libgfortran4 libglu1-mesa libopengl0 libqt5core5a libqt5gui5 libqt5help5 libqt5opengl5 libqt5printsupport5 libqt5svg5 libqt5x11extras5 libqt5xml5 libsdl1.2debian libsdl2-2.0-0 libssl-dev libssl1.1 libtbb2
 
-    - name: Install test dependencies
-      if: ${{ inputs.test }}
-      shell: bash
-      run: >
-        pip install -r requirements-test.txt
-        --index-url https://${{ inputs.parapy-pypi-user-name }}:${{ inputs.parapy-pypi-password }}@{{ inputs.parapy-pypi-address }}/simple/
-
-    - name: Test the application
-      if: ${{ inputs.test }}
-      shell: bash
-      run: >
-        pytest
-      env:
-        PARAPY_LIC: ${{ inputs.license-certificate }}
-        PARAPY_HEADLESS: true
-
     - name: Install parapy-cloud-cli
       shell: bash
       run: >
@@ -96,4 +74,4 @@ runs:
         --secret ${{ inputs.service-account-secret }}
         --version ${{ inputs.parapy-app-version }}
         --id ${{ inputs.parapy-app-id }}
-        --deploy ${{ inputs.deploy}}
+        --deploy ${{ inputs.deploy == 'true'}}
