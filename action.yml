@@ -1,0 +1,99 @@
+name: 'ParaPy Application Release Action'
+description: 'Action to release and deploy ParaPy Applications'
+inputs:
+  license-key:
+    description: 'your license key, a.k.a. PARAPY_LICENSE_KEY_1,  necessary to use ParaPy'
+    required: true
+  license-certificate:
+    description: 'your license certificate, a.k.a. PARAPY_LICENSE_KEY_2, necessary to use ParaPy' 
+    required: true
+  parapy-pypi-address:
+    description: 'ParaPy PyPi python repository at which to obtain the ParaPy dependencies'
+    required: false
+    default: 'pypi.parapy.nl'
+  parapy-pypi-user-name:
+    description: 'user name for the ParaPy PyPi package repository'
+    required: true
+  parapy-pypi-password:
+    description: 'password for the ParaPy PyPi package repository'
+    required: true
+  parapy-cloud-address:
+    description: 'ParaPyCloud address that the Application should release to, this is likely your ParaPy company address, e.g. <company-name>.parapy.nl'
+    required: true
+  service-account-identifier:
+    description: 'ParaPy service account identifier that has access to your application release within ParaPy Cloud'
+    required: true
+  service-account-secret:
+    description: 'ParaPy service account secret of the ParaPy service account identifier supplied'
+    required: true
+  parapy-app-id:
+    description: 'ParaPy Cloud application identifier of your ParaPy application'
+    required: true
+  parapy-app-version:
+    description: 'The version of your application release, (in the shape of [semantic versioning](https://semver.org/)'
+    required: false
+  test:
+    description: 'Whether to test your Application by running the pytests you provided, cancelling subsequent steps like releasing if any of the tests fail'
+    type: boolean
+    required: false
+    default: true
+  deploy:
+    description: 'Whether to deploy after the release of your application is succesful'
+    type: boolean
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        architecture: 'x64'
+
+    - name: Setup
+      shell: bash
+      run: |
+        sudo hostname ${{ inputs.license-key }}
+        pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 "wxPython~=4.2.1"
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5DC22404A6F9F1CA
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends build-essential cmake libdouble-conversion3 libgfortran4 libglu1-mesa libopengl0 libqt5core5a libqt5gui5 libqt5help5 libqt5opengl5 libqt5printsupport5 libqt5svg5 libqt5x11extras5 libqt5xml5 libsdl1.2debian libsdl2-2.0-0 libssl-dev libssl1.1 libtbb2
+
+    - name: Install test dependencies
+      if: ${{ inputs.test }}
+      shell: bash
+      run: >
+        pip install -r requirements-test.txt
+        --index-url https://${{ inputs.parapy-pypi-user-name }}:${{ inputs.parapy-pypi-password }}@{{ inputs.parapy-pypi-address }}/simple/
+
+    - name: Test the application
+      if: ${{ inputs.test }}
+      shell: bash
+      run: >
+        pytest
+      env:
+        PARAPY_LIC: ${{ inputs.license-certificate }}
+        PARAPY_HEADLESS: true
+
+    - name: Install parapy-cloud-cli
+      shell: bash
+      run: >
+        pip install parapy-cloud-cli
+        --index-url https://${{ inputs.parapy-pypi-user-name }}:${{ inputs.parapy-pypi-password }}@{{ inputs.parapy-pypi-address }}/simple/
+
+    - name: Building and releasing the application
+      shell: bash
+      run: >
+        parapy cloud app release
+        .
+        --url ${{ inputs.parapy-cloud-address }}
+        --client-id ${{ inputs.service-account-identifier }}
+        --secret ${{ inputs.service-account-secret }}
+        --version ${{ inputs.parapy-app-version }}
+        --id ${{ inputs.parapy-app-id }}
+        --deploy ${{ inputs.deploy}}
