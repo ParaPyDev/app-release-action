@@ -19,7 +19,7 @@ on:
 
 jobs:
   application-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: parapydev/app-release-action
         with:
@@ -30,7 +30,7 @@ jobs:
             parapy-cloud-address: "<company-parapy-cloud-address>"
             service-account-identifier: ${{vars.PARAPY_SERVICE_ACCOUNT_CLIENT_ID }}
             service-account-secret: ${{vars.PARAPY_SERVICE_ACCOUNT_SECRET }}
-            parapy-app-id: ${{vars.PARAPY_APP_ID }}
+            parapy-app-identifier: ${{vars.PARAPY_APP_ID }}
             parapy-app-version: ${{ inputs.version }}
             deploy: ${{ inputs.deploy }}
 ```
