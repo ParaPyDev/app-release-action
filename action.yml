@@ -37,6 +37,10 @@ inputs:
     required: false
     default: "false"
 
+branding:
+  icon: 'plus-circle'
+  color: 'blue'
+
 runs:
   using: "composite"
   steps:
@@ -62,7 +66,7 @@ runs:
       shell: bash
       run: >
         pip install parapy-cloud-cli
-        --index-url https://${{ inputs.parapy-pypi-user-name }}:${{ inputs.parapy-pypi-password }}@{{ inputs.parapy-pypi-address }}/simple/
+        --index-url https://${{ inputs.parapy-pypi-user-name }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/
 
     - name: Building and releasing the application
       shell: bash
@@ -73,5 +77,5 @@ runs:
         --client-id ${{ inputs.service-account-identifier }}
         --secret ${{ inputs.service-account-secret }}
         --version ${{ inputs.parapy-app-version }}
-        --id ${{ inputs.parapy-app-id }}
+        --id ${{ inputs.parapy-app-identifier }}
         ${{ inputs.deploy == 'true' && '--deploy' || '' }}
