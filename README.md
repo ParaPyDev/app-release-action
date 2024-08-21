@@ -25,7 +25,7 @@ jobs:
         with:
             license-key: ${{ secrets.PARAPY_LICENSE_KEY_1 }}
             license-certificate: ${{ secrets.PARAPY_LICENSE_KEY_2 }}
-            parapy-pypi-user-name: ${{ vars.PARAPY_PYPI_USERNAME }}
+            parapy-pypi-username: ${{ vars.PARAPY_PYPI_USERNAME }}
             parapy-pypi-password: ${{ secrets.PARAPY_PYPI_PASSWORD }}
             parapy-cloud-address: "<company-parapy-cloud-address>"
             service-account-identifier: ${{vars.PARAPY_SERVICE_ACCOUNT_CLIENT_ID }}
