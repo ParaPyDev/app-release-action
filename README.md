@@ -7,7 +7,7 @@ This GitHub Action is provided by [ParaPy](https://parapy.nl) to test ParaPy app
 Example workflow:
 
 ```yaml
-name: Test your application
+name: Release your application
 on: 
   workflow_dispatch:
     inputs:
