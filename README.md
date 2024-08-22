@@ -1,8 +1,8 @@
 # ParaPy Application Release GitHub Action
 
-![ParaPy Logo](https://s3-eu-west-1.amazonaws.com/parapy-cache/wp-content/uploads/2016/12/22134017/Logo_margin.png)
+<a href="https://parapy.nl" rel="ParaPy">![ParaPy](https://s3-eu-west-1.amazonaws.com/parapy-cache/wp-content/uploads/2016/12/22134017/Logo_margin.png)</a>
 
-This GitHub Action is provided by [ParaPy](https://parapy.nl) to test ParaPy applications.
+This GitHub Action is provided by [ParaPy](https://parapy.nl) to release ParaPy applications.
 
 Example workflow:
 
