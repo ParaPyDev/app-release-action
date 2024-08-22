@@ -4,7 +4,7 @@
 
 This GitHub Action is provided by [ParaPy](https://parapy.nl) to release ParaPy applications.
 
-Example workflow:
+Example workflow (*with recommended usage of [secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)/[vars](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables) usage for the different parameters*):
 
 ```yaml
 name: Release your application
@@ -36,3 +36,5 @@ jobs:
             parapy-app-version: ${{ inputs.version }}
             deploy: ${{ inputs.deploy }}
 ```
+
+Please find descriptions for each parameter in the [pipeline specification](action.yaml).
