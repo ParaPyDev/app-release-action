@@ -1,10 +1,10 @@
 name: 'ParaPy Application Release Action'
 description: 'Action to release and deploy ParaPy Applications'
 inputs:
-  license-key:
+  license-key-1:
     description: 'your license key, a.k.a. PARAPY_LICENSE_KEY_1,  necessary to use ParaPy'
     required: true
-  license-certificate:
+  license-key-2:
     description: 'your license certificate, a.k.a. PARAPY_LICENSE_KEY_2, necessary to use ParaPy' 
     required: true
   parapy-pypi-address:

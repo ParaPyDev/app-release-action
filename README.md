@@ -25,8 +25,8 @@ jobs:
     steps:
     - uses: parapydev/app-release-action
         with:
-            license-key: ${{ secrets.PARAPY_LICENSE_KEY_1 }}
-            license-certificate: ${{ secrets.PARAPY_LICENSE_KEY_2 }}
+            license-key-1: ${{ secrets.PARAPY_LICENSE_KEY_1 }}
+            license-key-2: ${{ secrets.PARAPY_LICENSE_KEY_2 }}
             parapy-pypi-username: ${{ vars.PARAPY_PYPI_USERNAME }}
             parapy-pypi-password: ${{ secrets.PARAPY_PYPI_PASSWORD }}
             parapy-cloud-address: "<company-parapy-cloud-address>"
