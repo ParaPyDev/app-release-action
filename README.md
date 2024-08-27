@@ -37,4 +37,4 @@ jobs:
             deploy: ${{ inputs.deploy }}
 ```
 
-Please find descriptions for each parameter in the [pipeline specification](action.yaml).
+Please find descriptions for each parameter in the [pipeline specification](action.yml).
