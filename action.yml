@@ -31,7 +31,7 @@ inputs:
     required: true
   parapy-app-version:
     description: 'The version of your application release, (e.g. 0.1.0, [semantic versioning](https://semver.org/)'
-    required: false
+    required: true
   deploy:
     description: 'Whether to deploy after the release of your application is successful'
     required: false
