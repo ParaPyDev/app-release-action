@@ -36,6 +36,10 @@ inputs:
     description: 'Whether to deploy after the release of your application is successful'
     required: false
     default: "false"
+  parapy-cloud-cli-version:
+    description: 'Version of parapy cloud cli'
+    required: false
+    default: "0.13"
 
 branding:
   icon: 'plus-circle'
@@ -56,7 +60,7 @@ runs:
     - name: Install parapy-cloud-cli
       shell: bash
       run: >
-        pip install parapy-cloud-cli
+        pip install parapy-cloud-cli ^= {{ inputs.parapy-cloud-cli-version }}
         --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/
 
     - name: Building and releasing the application
