@@ -31,8 +31,8 @@ jobs:
             parapy-pypi-password: ${{ secrets.PARAPY_PYPI_PASSWORD }}
             parapy-cloud-address: "<company-parapy-cloud-address>"
             service-account-identifier: ${{vars.PARAPY_SERVICE_ACCOUNT_CLIENT_ID }}
-            service-account-secret: ${{vars.PARAPY_SERVICE_ACCOUNT_SECRET }}
-            parapy-app-identifier: ${{vars.PARAPY_APP_ID }}
+            service-account-secret: ${{ secrets.PARAPY_SERVICE_ACCOUNT_SECRET }}
+            parapy-app-identifier: ${{ vars.PARAPY_APP_ID }}
             parapy-app-version: ${{ inputs.version }}
             deploy: ${{ inputs.deploy }}
 ```
