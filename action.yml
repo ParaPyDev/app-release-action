@@ -54,7 +54,7 @@ runs:
     - name: Install parapy-cloud-cli
       shell: bash
       run: >
-        pip install parapy-cloud-cli${{ inputs.parapy-cloud-cli-version == '' && '' || '~=' }}${{ inputs.parapy-cloud-cli-version }}
+        pip install parapy-cloud-cli${{ inputs.parapy-cloud-cli-version == 0 && '' || '~=' }}${{ inputs.parapy-cloud-cli-version }}
         --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/
 
     - name: Building and releasing the application
