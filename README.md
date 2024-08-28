@@ -35,4 +35,5 @@ jobs:
             deploy: ${{ inputs.deploy }}
 ```
 
-Please find descriptions for each parameter in the [pipeline specification](action.yml).
+Please find descriptions for each parameter in the [pipeline specification](action.yml). And find extensive information to obtain each input parameter in the [ParaPy pipeline documentation](https://parapy.nl/docs/cloud/latest/application_developer/cicd_pipelines.html#pipeline-parameters).
+
