@@ -34,6 +34,10 @@ inputs:
     description: 'Version of parapy cloud cli, keep empty for the latest'
     required: false
     default: ''
+  parapy-cloud-version:
+    description: 'Version of parapy Cloud, keep empty if you are targeting the latest'
+    required: false
+    default: ''
 
 branding:
   icon: 'plus-circle'
@@ -51,20 +55,37 @@ runs:
         python-version: '3.11'
         architecture: 'x64'
 
-    - name: Install parapy-cloud-cli
+    - name: Installing dependencies
       shell: bash
-      run: >
-        pip install parapy-cloud-cli${{ inputs.parapy-cloud-cli-version != '' && '==' || '' }}${{ inputs.parapy-cloud-cli-version }}
-        --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/
+      run: |
+        pip install --upgrade pip --no-input
+        if [[ -n "${{ inputs.parapy-cloud-version }}" ]] && [[ $(echo "${{ inputs.parapy-cloud-version }}" | cut -d. -f1) -lt 1 ]]; then
+          pip install parapy-cloud-cli${{ inputs.parapy-cloud-cli-version != '' && '==' || '' }}${{ inputs.parapy-cloud-cli-version }} \
+            --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
+            --no-input
+        else
+          pip install parapy-cli \
+            --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
+            --no-input
+        fi
 
     - name: Building and releasing the application
       shell: bash
-      run: >
-        parapy cloud app release
-        .
-        --url ${{ inputs.parapy-cloud-address }}
-        --client-id ${{ inputs.service-account-identifier }}
-        --secret ${{ inputs.service-account-secret }}
-        --version ${{ inputs.parapy-app-version }}
-        --id ${{ inputs.parapy-app-identifier }}
-        ${{ inputs.deploy == 'true' && '--deploy' || '' }}
+      run: |
+        if [[ -n "${{ inputs.parapy-cloud-version }}" ]] && [[ $(echo "${{ inputs.parapy-cloud-version }}" | cut -d. -f1) -lt 1 ]]; then
+          parapy cloud app release . \
+            --url ${{ inputs.parapy-cloud-address }} \
+            --client-id ${{ inputs.service-account-identifier }} \
+            --secret ${{ inputs.service-account-secret }} \
+            --version ${{ inputs.parapy-app-version }} \
+            --id ${{ inputs.parapy-app-identifier }} \
+            ${{ inputs.deploy == 'true' && '--deploy' || '' }}
+        else
+          parapy app release . \
+            --url ${{ inputs.parapy-cloud-address }} \
+            -c ${{ inputs.service-account-identifier }} \
+            -s ${{ inputs.service-account-secret }} \
+            -v ${{ inputs.parapy-app-version }} \
+            --id ${{ inputs.parapy-app-identifier }} \
+            --no-input
+        fi
