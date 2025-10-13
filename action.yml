@@ -64,7 +64,7 @@ runs:
             --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
             --no-input
         else
-          pip install parapy-cli \
+          pip install parapy-cli==1.0.1.dev0+1a4869f \
             --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
             --no-input
         fi
