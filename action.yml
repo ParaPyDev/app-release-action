@@ -31,7 +31,7 @@ inputs:
     required: false
     default: "false"
   parapy-cloud-cli-version:
-    description: 'Version of parapy cloud cli, keep empty for the latest'
+    description: '[DEPRECATED: use parapy-cloud-version instead] Version of parapy cloud cli, keep empty for the latest'
     required: false
     default: ''
   parapy-cloud-version:
@@ -64,7 +64,7 @@ runs:
             --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
             --no-input
         else
-          pip install parapy-cli==1.0.1.dev0+1a4869f \
+          pip install parapy-cli \
             --index-url https://${{ inputs.parapy-pypi-username }}:${{ inputs.parapy-pypi-password }}@${{ inputs.parapy-pypi-address }}/simple/ \
             --no-input
         fi
