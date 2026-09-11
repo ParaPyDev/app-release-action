@@ -14,14 +14,10 @@ on:
       version:
         description: 'Application version to release'     
         required: true
-    deploy:
-        description: 'Whether to deploy the application if the release is successful'
-        type: boolean
-        default: false
 
 jobs:
   application-release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: parapydev/app-release-action
         with:
@@ -32,8 +28,6 @@ jobs:
             service-account-secret: ${{ secrets.PARAPY_SERVICE_ACCOUNT_SECRET }}
             parapy-app-identifier: ${{ vars.PARAPY_APP_ID }}
             parapy-app-version: ${{ inputs.version }}
-            deploy: ${{ inputs.deploy }}
 ```
 
-Please find descriptions for each parameter in the [pipeline specification](action.yml). And find extensive information to obtain each input parameter in the [ParaPy pipeline documentation](https://parapy.nl/docs/cloud/latest/application_developer/cicd_pipelines.html#pipeline-parameters).
-
+Please find descriptions for each parameter in the [pipeline specification](action.yml). And find extensive information to obtain each input parameter in the [ParaPy pipeline documentation](https://parapy.nl/docs/get-started/deploy/githubpipelines/).
