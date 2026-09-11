@@ -19,7 +19,7 @@ jobs:
   application-release:
     runs-on: ubuntu-24.04
     steps:
-    - uses: parapydev/app-release-action
+    - uses: parapydev/app-release-action@2
         with:
             parapy-pypi-username: ${{ vars.PARAPY_PYPI_USERNAME }}
             parapy-pypi-password: ${{ secrets.PARAPY_PYPI_PASSWORD }}
